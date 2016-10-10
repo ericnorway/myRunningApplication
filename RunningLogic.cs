@@ -36,7 +36,7 @@ namespace MyRunningApplication
 
 		// Builds the SQL command to insert a distance for a date.
 		private SqlCommand BuildAddDistanceCommand(SqlConnection conn, DateTime date, double distance, int? duration, string notes) {
-			SqlCommand cmd = new SqlCommand("INSERT INTO Distance (Date, Distance, Time, Notes) VALUES (@0, @1, @2, @3);", conn);
+			SqlCommand cmd = new SqlCommand("INSERT INTO Distance (Date, Distance, Duration, Notes) VALUES (@0, @1, @2, @3);", conn);
 			cmd.Parameters.Add(new SqlParameter("0", date));
 			cmd.Parameters.Add(new SqlParameter("1", distance));
 			cmd.Parameters.Add(new SqlParameter("2", duration));
