@@ -33,7 +33,7 @@ namespace MyRunningApplication
 				int? duration = GetDuration();
 				string notes = GetNotes();
 				runningLogic.AddDistance(date, distance, duration, notes);
-				this.Close();
+				Close();
 			} catch (Exception ex) {
 				Error errorWindow = new Error(ex.Message);
 				errorWindow.ShowDialog();
@@ -41,7 +41,7 @@ namespace MyRunningApplication
 		}
 
 		private void btnCancel_Click(object sender, RoutedEventArgs e) {
-			this.Close();
+			Close();
 		}
 
 		private void txtDistance_GotFocus(object sender, RoutedEventArgs e) {

@@ -1,0 +1,33 @@
+﻿<Window x:Class="MyRunningApplication.SpecificDates"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyRunningApplication"
+        mc:Ignorable="d"
+        Title="Get Distance Between Specific Dates" Height="300" Width="300" Background="#FF1FCAD4">
+    <Viewbox Margin="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <DatePicker x:Name="datePickerStart" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
+            <DatePicker x:Name="datePickerEnd" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
+            <Label x:Name="lblStartDate" Grid.Row="0" Grid.Column="0" Content="Start:"/>
+            <Label x:Name="lblEndDate" Grid.Row="1" Grid.Column="0" Content="End:"/>
+            <Label x:Name="lblDistance" Grid.Row="2" Grid.Column="0" Content="Distance:"/>
+            <Label x:Name="lblDistanceValue" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Content="0.0" HorizontalContentAlignment="Right"/>
+            <Button x:Name="btnGetDistance" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Get Distance" Click="btnGetDistance_Click"/>
+            <Button x:Name="btnClose" Grid.Row="3" Grid.Column="2" Content="Cancel" Click="btnClose_Click"/>
+        </Grid>
+    </Viewbox>
+
+</Window>

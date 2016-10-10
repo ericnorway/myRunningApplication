@@ -32,14 +32,12 @@ namespace MyRunningApplication
 			NewDistance distanceWindow = new NewDistance(runningLogic);
 			if (distanceWindow.ShowDialog() == true) {
 				UpdateDistancesShown();
-			} else {
-
 			}
 		}
 
 		private void btnDateRange_Click(object sender, RoutedEventArgs e) {
-			Error errorWindow = new Error("Not implemented yet.");
-			errorWindow.ShowDialog();
+			SpecificDates specificDatesWindow = new SpecificDates(runningLogic);
+			specificDatesWindow.ShowDialog();
 		}
 
 		private void btnViewDetails_Click(object sender, RoutedEventArgs e) {
@@ -49,9 +47,9 @@ namespace MyRunningApplication
 
 		private void UpdateDistancesShown() {
 			Tuple<double, double, double> values = runningLogic.GetDistancesGeneric();
-			lblWeekValue.Content = values.Item1.ToString();
-			lblMonthValue.Content = values.Item2.ToString();
-			lblYearValue.Content = values.Item3.ToString();
+			lblWeekValue.Content = values.Item1.ToString("F1");
+			lblMonthValue.Content = values.Item2.ToString("F1");
+			lblYearValue.Content = values.Item3.ToString("F1");
 		}
 	}
 }
