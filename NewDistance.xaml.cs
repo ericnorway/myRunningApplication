@@ -33,6 +33,7 @@ namespace MyRunningApplication
 				int? duration = GetDuration();
 				string notes = GetNotes();
 				runningLogic.AddDistance(date, distance, duration, notes);
+				DialogResult = true;
 				Close();
 			} catch (Exception ex) {
 				Error errorWindow = new Error(ex.Message);
