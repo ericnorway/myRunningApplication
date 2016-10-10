@@ -1,0 +1,9 @@
+*.exe
+*.config
+*.pdb
+*.manifest
+*.resources
+*.cache
+*.Cache
+*.resx
+*.csproj
