@@ -9,13 +9,15 @@ namespace MyRunningApplication
 {
 	public class RunningLogic
 	{
+		private const string connectionString = "Data Source = .\\SQLEXPRESS; Initial Catalog = Running; Integrated Security = True";
+
 		public RunningLogic() {
 
 		}
 
 		public void AddDistance(DateTime date, double distance, int? duration, string notes) {
 			using (SqlConnection conn = new SqlConnection()) {
-				conn.ConnectionString = "Data Source = .\\SQLEXPRESS; Initial Catalog = Running; Integrated Security = True";
+				conn.ConnectionString = connectionString;
 				conn.Open();
 
 				SqlCommand cmd = BuildAddDistanceCommand(conn, date, distance, duration, notes);
@@ -47,7 +49,7 @@ namespace MyRunningApplication
 			double yearly = 0.0;
 
 			using (SqlConnection conn = new SqlConnection()) {
-				conn.ConnectionString = "Data Source = .\\SQLEXPRESS; Initial Catalog = Running; Integrated Security = True";
+				conn.ConnectionString = connectionString;
 				conn.Open();
 
 				weekly = RunWeeklyQuery(conn);
