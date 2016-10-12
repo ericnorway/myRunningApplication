@@ -32,7 +32,7 @@ namespace MyRunningApplication
 				double distance = GetDistance();
 				int? duration = GetDuration();
 				string notes = GetNotes();
-				runningLogic.AddDistance(date, distance, duration, notes);
+				runningLogic.AddDistance(new MyRunningApplication.Entry(date, distance, duration, notes));
 				DialogResult = true;
 				Close();
 			} catch (Exception ex) {
@@ -70,6 +70,10 @@ namespace MyRunningApplication
 		}
 
 		private DateTime GetDate() {
+			if (datePicker1.SelectedDate == null) {
+				throw new ArgumentException("You must pick a date.");
+			}
+
 			DateTime now = DateTime.Now.Date;
 			DateTime date = datePicker1.SelectedDate.Value.Date;
 			if (date > now) {

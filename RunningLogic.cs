@@ -19,17 +19,17 @@ namespace MyRunningApplication
 		}
 
 		// Adds the distance for a date.
-		public void AddDistance(DateTime date, double distance, int? duration, string notes) {
+		public void AddDistance(Entry entry) {
 			using (SqlConnection conn = new SqlConnection()) {
 				conn.ConnectionString = connectionString;
 				conn.Open();
 
-				SqlCommand cmd = queryBuilder.BuildAddDistanceCommand(conn, date, distance, duration, notes);
+				SqlCommand cmd = queryBuilder.BuildAddDistanceCommand(conn, entry.date, entry.distance, entry.duration, entry.notes);
 				try {
 					cmd.ExecuteNonQuery();
 				} catch (SqlException ex) {
 					if (ex.Number == 2601 || ex.Number == 2627) {
-						throw new ArgumentException(string.Format("The distance for date {0} already exists.", date.ToShortDateString()));
+						throw new ArgumentException(string.Format("The distance for date {0} already exists.", entry.date.ToShortDateString()));
 					} else {
 						throw ex;
 					}
@@ -56,17 +56,28 @@ namespace MyRunningApplication
 		}
 
 		// Gets the total distance ran between two dates.
-		public double GetDistanceCustom(DateTime start, DateTime end) {
+		public double GetSumDistanceRange(DateTime start, DateTime end) {
 			double distance = 0.0;
 
 			using (SqlConnection conn = new SqlConnection()) {
 				conn.ConnectionString = connectionString;
 				conn.Open();
 
-				distance = RunCustomQuery(conn, start, end);
+				distance = RunSumDistanceRangeQuery(conn, start, end);
 			}
 
 			return distance;
+		}
+
+		// Gets all the data between two dates.
+		public List<Entry> GetAllDataRange(DateTime start, DateTime end) {
+
+			using (SqlConnection conn = new SqlConnection()) {
+				conn.ConnectionString = connectionString;
+				conn.Open();
+
+				return RunGetAllForRange(conn, start, end);
+			}
 		}
 
 		// Gets the total distance from the beginning of the week until now.
@@ -75,7 +86,7 @@ namespace MyRunningApplication
 			DateTime start = timeHelper.GetBeginningOfWeek();
 			DateTime end = DateTime.Now.Date;
 
-			SqlCommand cmd = queryBuilder.BuildDistanceQuery(conn, start, end);
+			SqlCommand cmd = queryBuilder.BuildSumDistanceQuery(conn, start, end);
 			using (SqlDataReader reader = cmd.ExecuteReader()) {
 				reader.Read();
 				value = reader.GetDouble(0);
@@ -89,7 +100,7 @@ namespace MyRunningApplication
 			DateTime start = timeHelper.GetBeginningOfMonth();
 			DateTime end = DateTime.Now.Date;
 
-			SqlCommand cmd = queryBuilder.BuildDistanceQuery(conn, start, end);
+			SqlCommand cmd = queryBuilder.BuildSumDistanceQuery(conn, start, end);
 			using (SqlDataReader reader = cmd.ExecuteReader()) {
 				reader.Read();
 				value = reader.GetDouble(0);
@@ -103,7 +114,7 @@ namespace MyRunningApplication
 			DateTime start = timeHelper.GetBeginningOfYear();
 			DateTime end = DateTime.Now.Date;
 
-			SqlCommand cmd = queryBuilder.BuildDistanceQuery(conn, start, end);
+			SqlCommand cmd = queryBuilder.BuildSumDistanceQuery(conn, start, end);
 			using (SqlDataReader reader = cmd.ExecuteReader()) {
 				reader.Read();
 				value = reader.GetDouble(0);
@@ -112,14 +123,29 @@ namespace MyRunningApplication
 		}
 
 		// Gets the total distance ran between two dates.
-		private double RunCustomQuery(SqlConnection conn, DateTime start, DateTime end) {
+		private double RunSumDistanceRangeQuery(SqlConnection conn, DateTime start, DateTime end) {
 			double value = 0.0;
-			SqlCommand cmd = queryBuilder.BuildDistanceQuery(conn, start, end);
+			SqlCommand cmd = queryBuilder.BuildSumDistanceQuery(conn, start, end);
 			using (SqlDataReader reader = cmd.ExecuteReader()) {
 				reader.Read();
 				value = reader.GetDouble(0);
 			}
 			return value;
+		}
+
+		private List<Entry> RunGetAllForRange(SqlConnection conn, DateTime start, DateTime end) {
+			List<Entry> entries = new List<Entry>();
+			SqlCommand cmd = queryBuilder.BuildGetAllDistanacesQuery(conn, start, end);
+			using (SqlDataReader reader = cmd.ExecuteReader()) {
+				while(reader.Read()) {
+					DateTime tempDate = reader.GetDateTime(0);
+					double tempDist = reader.GetDouble(1);
+					int? tempDur = reader.GetSqlInt32(2).IsNull ? (int?)null : reader.GetInt32(2);
+					string tempNotes = reader.GetString(3);
+					entries.Add(new Entry(tempDate, tempDist, tempDur, tempNotes));
+				}
+			}
+			return entries;
 		}
 	}
 }

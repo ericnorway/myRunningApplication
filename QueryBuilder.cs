@@ -29,8 +29,16 @@ namespace MyRunningApplication
 		}
 
 		// Builds the query for getting the total distance between two dates.
-		public SqlCommand BuildDistanceQuery(SqlConnection conn, DateTime start, DateTime end) {
+		public SqlCommand BuildSumDistanceQuery(SqlConnection conn, DateTime start, DateTime end) {
 			SqlCommand cmd = new SqlCommand("SELECT SUM(Distance) FROM Distance WHERE Date >= @begin AND Date <= @end;", conn);
+			cmd.Parameters.Add(new SqlParameter("begin", start));
+			cmd.Parameters.Add(new SqlParameter("end", end));
+
+			return cmd;
+		}
+
+		public SqlCommand BuildGetAllDistanacesQuery(SqlConnection conn, DateTime start, DateTime end) {
+			SqlCommand cmd = new SqlCommand("SELECT Date, Distance, Duration, Notes FROM Distance WHERE Date >= @begin AND Date <= @end;", conn);
 			cmd.Parameters.Add(new SqlParameter("begin", start));
 			cmd.Parameters.Add(new SqlParameter("end", end));
 

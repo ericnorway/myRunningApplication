@@ -18,6 +18,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <DatePicker x:Name="datePickerStart" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2"/>
             <DatePicker x:Name="datePickerEnd" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
@@ -26,7 +27,8 @@
             <Label x:Name="lblDistance" Grid.Row="2" Grid.Column="0" Content="Distance:"/>
             <Label x:Name="lblDistanceValue" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Content="0.0" HorizontalContentAlignment="Right"/>
             <Button x:Name="btnGetDistance" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Get Distance" Click="btnGetDistance_Click"/>
-            <Button x:Name="btnClose" Grid.Row="3" Grid.Column="2" Content="Cancel" Click="btnClose_Click"/>
+            <Button x:Name="btnGraph" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Content="Show Graph" Height="19" Margin="0,0,70,0.2" VerticalAlignment="Bottom" Click="btnGraph_Click"/>
+            <Button x:Name="btnClose" Grid.Row="3" Grid.Column="2" Grid.RowSpan="2" Content="Cancel" Click="btnClose_Click"/>
         </Grid>
     </Viewbox>
 

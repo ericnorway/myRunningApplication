@@ -35,7 +35,7 @@ namespace MyRunningApplication
 					throw new ArgumentException("Start date cannot be after end date.");
 				}
 
-				double distance = runningLogic.GetDistanceCustom(start, end);
+				double distance = runningLogic.GetSumDistanceRange(start, end);
 				lblDistanceValue.Content = distance.ToString("F1");
 			}
 			catch (Exception ex) {
@@ -49,11 +49,29 @@ namespace MyRunningApplication
 		}
 
 		private DateTime GetStartDate() {
+			if (datePickerStart.SelectedDate == null) {
+				throw new ArgumentException("You must pick a start date.");
+			}
 			return datePickerStart.SelectedDate.Value.Date;
 		}
 
 		private DateTime GetEndDate() {
+			if (datePickerEnd.SelectedDate == null) {
+				throw new ArgumentException("You must pick an end date.");
+			}
 			return datePickerEnd.SelectedDate.Value.Date;
+		}
+
+		private void btnGraph_Click(object sender, RoutedEventArgs e) {
+			try {
+				DateTime start = GetStartDate();
+				DateTime end = GetEndDate();
+				GraphWindow graph = new GraphWindow(runningLogic, start, end);
+				graph.ShowDialog();
+			} catch (ArgumentException ex) {
+				Error errorWindow = new Error(ex.Message);
+				errorWindow.ShowDialog();
+			}
 		}
 	}
 }
