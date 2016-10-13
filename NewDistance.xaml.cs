@@ -77,7 +77,7 @@ namespace MyRunningApplication
 			DateTime now = DateTime.Now.Date;
 			DateTime date = datePicker1.SelectedDate.Value.Date;
 			if (date > now) {
-				throw new ArgumentException(string.Format("Date {0} is in the future.", date));
+				throw new ArgumentException(string.Format("Date {0} is in the future.", date.ToShortDateString()));
 			}
 			return date;
 		}

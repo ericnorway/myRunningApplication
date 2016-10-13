@@ -21,16 +21,18 @@ namespace MyRunningApplication
 	{
 		public Error(string content) {
 			InitializeComponent();
+			string[] words = content.Split();
 			StringBuilder sb = new StringBuilder();
-			int count = 0;
-			while (count < content.Length) {
-				if (content.Length > count + 24) {
-					sb.Append(content.Substring(count, 24));
+			int lineLength = 0;
+
+			for (int i = 0; i < words.Length; i++) {
+				if (lineLength + words[i].Length >= 24) {
+					lineLength = 0;
 					sb.Append(Environment.NewLine);
-				} else {
-					sb.Append(content.Substring(count));
 				}
-				count += 24;
+				sb.Append(words[i]);
+				sb.Append(" ");
+				lineLength += words[i].Length + 1;
 			}
 
 			lblError.Content = sb.ToString();
