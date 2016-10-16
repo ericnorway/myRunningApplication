@@ -89,7 +89,7 @@ namespace MyRunningApplication
 			SqlCommand cmd = queryBuilder.BuildSumDistanceQuery(conn, start, end);
 			using (SqlDataReader reader = cmd.ExecuteReader()) {
 				reader.Read();
-				value = reader.GetDouble(0);
+				value = reader.IsDBNull(0) ? 0.0 : reader.GetDouble(0);
 			}
 			return value;
 		}
@@ -103,7 +103,7 @@ namespace MyRunningApplication
 			SqlCommand cmd = queryBuilder.BuildSumDistanceQuery(conn, start, end);
 			using (SqlDataReader reader = cmd.ExecuteReader()) {
 				reader.Read();
-				value = reader.GetDouble(0);
+				value = reader.IsDBNull(0) ? 0.0 : reader.GetDouble(0);
 			}
 			return value;
 		}
@@ -117,7 +117,7 @@ namespace MyRunningApplication
 			SqlCommand cmd = queryBuilder.BuildSumDistanceQuery(conn, start, end);
 			using (SqlDataReader reader = cmd.ExecuteReader()) {
 				reader.Read();
-				value = reader.GetDouble(0);
+				value = reader.IsDBNull(0) ? 0.0 : reader.GetDouble(0);
 			}
 			return value;
 		}
@@ -128,7 +128,7 @@ namespace MyRunningApplication
 			SqlCommand cmd = queryBuilder.BuildSumDistanceQuery(conn, start, end);
 			using (SqlDataReader reader = cmd.ExecuteReader()) {
 				reader.Read();
-				value = reader.GetDouble(0);
+				value = reader.IsDBNull(0) ? 0.0 : reader.GetDouble(0);
 			}
 			return value;
 		}
@@ -139,8 +139,8 @@ namespace MyRunningApplication
 			using (SqlDataReader reader = cmd.ExecuteReader()) {
 				while(reader.Read()) {
 					DateTime tempDate = reader.GetDateTime(0);
-					double tempDist = reader.GetDouble(1);
-					int? tempDur = reader.GetSqlInt32(2).IsNull ? (int?)null : reader.GetInt32(2);
+					double tempDist = reader.IsDBNull(1) ? 0.0 : reader.GetDouble(1);
+					int? tempDur = reader.IsDBNull(2) ? (int?)null : reader.GetInt32(2);
 					string tempNotes = reader.GetString(3);
 					entries.Add(new Entry(tempDate, tempDist, tempDur, tempNotes));
 				}
